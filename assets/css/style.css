@@ -1,0 +1,27 @@
+
+
+.inln{
+    width:auto;
+    float: left;
+    border: 2px solid black;
+}
+
+#msg1 #msg2{
+    float: left;
+}
+
+ul{
+    list-style: none;
+    float: left;
+    margin-top: 0px;
+    margin-left: 5px;
+    padding: 0px;
+}
+
+li{
+    list-style: none;
+    float: left;
+    margin-right: 5px;
+    margin-left: 0px;
+}
+

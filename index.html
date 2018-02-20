@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets\css\style.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Hangman</title>
+</head>
+
+<body>
+
+    <h1>Hangman Game</h1>
+    <h2>Famous African American Actors</h2>
+    <br>
+
+    <div class="inln">
+        <div id="msg1">The word is:</div>
+        <div id="keyin"></div>
+    </div>
+    <br>
+    <div class="inln">
+        <div id="msg2">Incorrect Guesses:</div>
+        <div id="wrong"></div>
+    </div>
+
+</body>
+
+<script>
+    //    <!-- select word -->   
+    var word = "camal";
+    console.log(word);
+    console.log(word.length);
+
+    // Initialize right and wrong guess count
+    var rightguess = 0;
+    var wrongguess = 0;
+
+    // <!-- show blanks for letters in the word -->
+
+    // Connect to the the space that will show the word.
+    wordspace = document.getElementById('keyin');
+    var guessspace = document.createElement("ul");
+    wordspace.appendChild(guessspace);
+
+    // Fill the space equivalent to the length of the word with underscores.
+    for (i = 0; i < word.length; i++) {
+
+        var ltrpos = document.createElement("li");
+        var somstri = "_";
+        ltrpos.innerText = somstri;
+        guessspace.appendChild(ltrpos);
+
+    }
+
+    function replaceltr(x, a) {
+        var element = ltrpos.parentNode.childNodes;
+        element[x].innerText = a;
+        return;
+    }
+
+
+    // Connect to the space where incorrect guesses will be shown.
+    wrnglttr = document.getElementById('wrong');
+    var wrnglttrspace = document.createElement("ul");
+    wrnglttr.appendChild(wrnglttrspace);
+
+    var alreadyguessed = [];
+
+    document.onkeyup = function (event) {
+        var userInput = event.key.toLowerCase();
+        var found = false;
+        var letters = /^[A-Za-z]+$/;
+
+        // Check for alpha input.
+        if (userInput.match("^[a-zA-Z]+$")) {
+            // Check if letter was already guessed.
+            if (alreadyguessed.indexOf(userInput) >= 0) {
+                alert("This letter was already guessed.  Guess again.")
+            }
+            else {
+                // Add guessed letter to list of letters already guessed.
+                alreadyguessed.push(userInput);
+
+                // Check through the word for the letter.
+                for (i = 0; i < word.length; i++) {
+
+                    if (event.key === word[i]) {
+                        found = true;
+                        replaceltr(i, userInput);
+                        rightguess++;
+                        if (rightguess === word.length) {
+                            alert("WINNER!!!");
+                        }
+                    }
+                }
+                // Add the letter to wrong guesses.
+                if (found === false) {
+                    var incguess = document.createElement("li");
+                    incguess.innerText = userInput;
+                    wrnglttrspace.appendChild(incguess);
+                    wrongguess++;
+                    if (wrongguess >= 10) {
+                        alert("LOSER!!");
+                    }
+                }
+            }
+        }
+        else {
+            alert("You must guess a letter from a-z.")
+        }
+
+    }
+
+
+
+
+</script>
+
+</html>
