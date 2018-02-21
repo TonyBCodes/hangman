@@ -1,5 +1,10 @@
 
 
+.container{
+    background: blueviolet;
+    width: 334px;
+}
+
 .inln{
     width:auto;
     float: left;
@@ -24,4 +29,10 @@ li{
     margin-right: 5px;
     margin-left: 0px;
 }
+
+canvas{
+    color:white;
+    border: black dashed 2px;
+    padding:15px;
+  }
 
