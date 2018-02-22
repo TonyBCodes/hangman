@@ -1,6 +1,18 @@
 
 
-.container{
+.page-header{
+    text-align:center;
+}
+
+.panel-body{
+    text-align: center;
+}
+
+body{
+    background-image: url(../images/hangback.jpg);
+}
+
+.hmcontainer{
     background: blueviolet;
     width: 334px;
 }
@@ -11,9 +23,27 @@
     border: 2px solid black;
 }
 
+.col-md-12{
+    text-align: center;
+}
+
+#keyin{
+    text-align: center;
+}
+
+#corrans{
+    text-align: center;
+}
+
 #msg1 #msg2{
     float: left;
 }
+
+#messages{
+    color: red;
+    font-weight: bold;
+}
+
 
 ul{
     list-style: none;
