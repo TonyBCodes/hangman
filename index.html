@@ -65,11 +65,23 @@
         </div>
 
         <div class="row" id="msgbox">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">Game Messages</h2>
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Game Messages</h2>
+                    </div>
+                    <div class="panel-body" id="messages">
+                    </div>
                 </div>
-                <div class="panel-body" id="messages">
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Reset the Game</h2>
+                    </div>
+                    <div class="panel-body" id="reset">
+                        <input class="btn btn-default" type="button" onclick="gamereset()" value="Reset">
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,7 +106,6 @@
 
 <script>
     // Initialize global variables.
-    //    <!-- select word -->   
     var word = "";
     var hint = "";
     var vidlink = "";
@@ -105,6 +116,7 @@
     var wrongguess = 0;
     var lives = 10;
     var random;
+    var gameover = false;
 
     var actlist = [
         ["eddie murphy", "Multi-talented, appeared on SNL, born 1961", "assets/movies/eddie.mp4"],
@@ -126,6 +138,7 @@
 
     // -------------------------------------------------------------
     // Draw The Hangman
+    // Credit: A PEN BY Cathy Dutton
     // -------------------------------------------------------------
 
     // Animate man
@@ -204,6 +217,74 @@
     // End Of Drawing
     // ----------------------------------------------------------------
 
+
+function gamereset(){
+    location.reload();
+
+}
+
+    // Reset the Game (does not work as intended)
+    // function gamereset() {
+    //     // Initialize global variables.
+    //     var word = "";
+    //     var hint = "";
+    //     var vidlink = "";
+    //     var nonlttr = 0; //keeps track of non-letter characters
+
+    //     // Initialize right and wrong guess count
+    //     var rightguess = 0;
+    //     var wrongguess = 0;
+    //     var lives = 10;
+    //     var random;
+    //     var gameover = false;
+
+    //     // Clear the text areas
+    //     document.getElementById("clue").innerText = "";
+    //     document.getElementById("messages").innerText = "";
+    //     document.getElementById("wrong").innerHTML = "";
+    //     document.getElementById("keyin").innerHTML = "";
+
+    //     //Reset the already guessed array
+    //     alreadyguessed.length = 0;
+
+    //     // Clear the hangman
+    //     myStickman = document.getElementById("stickman");
+    //     context = myStickman.getContext('2d');
+    //     context.clearRect(0, 0, 400, 400);
+
+
+    //     // Pick a new person
+    //     var random = Math.floor(Math.random() * 10);
+    //     word = actlist[random][0];
+    //     hint = actlist[random][1];
+    //     vidlink = actlist[random][2];
+    //     document.getElementById("clue").innerText = hint;
+
+    //     // Connect to the the space that will show the word.
+    //     wordspace = document.getElementById('keyin');
+    //     var guessspace = document.createElement("ul");
+    //     wordspace.appendChild(guessspace);
+
+    //     // Fill the space equivalent to the length of the word with underscores.
+    //     for (i = 0; i < word.length; i++) {
+
+    //         var ltrpos = document.createElement("li");
+    //         var somstri = "_";
+    //         if (word.charAt(i) === " ") {
+    //             somstri = '\xa0';
+    //             nonlttr++;
+    //         }
+    //         ltrpos.innerText = somstri;
+    //         guessspace.appendChild(ltrpos);
+    //     }
+
+    //     // Connect to the space where incorrect guesses will be shown.
+    //     wrnglttr = document.getElementById('wrong');
+    //     var wrnglttrspace = document.createElement("ul");
+    //     wrnglttr.appendChild(wrnglttrspace);
+    // }
+
+
     // Randomly select the name that will be solved.
 
     var random = Math.floor(Math.random() * 10);
@@ -257,56 +338,64 @@
         var found = false;
         var letters = /^[A-Za-z]+$/;
 
-        // Check for alpha input.
-        if (userInput.match("^[a-zA-Z]+$")) {
-            // Check if letter was already guessed.
-            if (alreadyguessed.indexOf(userInput) >= 0) {
-                mes = document.getElementById("messages");
-                mes.innerText = "This letter was already guessed. Guess again.";
-            }
-            else {
-                // Add guessed letter to list of letters already guessed.
-                alreadyguessed.push(userInput);
+        if (gameover !== true) {
+            // Check for alpha input.
+            if (userInput.match("^[a-zA-Z]+$")) {
+                // Check if letter was already guessed.
+                if (alreadyguessed.indexOf(userInput) >= 0) {
+                    mes = document.getElementById("messages");
+                    mes.innerText = "This letter was already guessed. Guess again.";
+                }
+                else {
+                    // Add guessed letter to list of letters already guessed.
+                    alreadyguessed.push(userInput);
 
-                mes = document.getElementById("messages");
-                mes.innerText = "";
+                    mes = document.getElementById("messages");
+                    mes.innerText = "";
 
-                // Check through the word for the letter.
-                for (i = 0; i < word.length; i++) {
+                    // Check through the word for the letter.
+                    for (i = 0; i < word.length; i++) {
 
-                    if (event.key === word[i]) {
-                        found = true;
-                        replaceltr(i, userInput);
-                        rightguess++;
-                        // If all letters have been guessed, declare winner.
-                        if (rightguess === (word.length - nonlttr)) {
+                        if (event.key === word[i]) {
+                            found = true;
+                            replaceltr(i, userInput);
+                            rightguess++;
+                            // If all letters have been guessed, declare winner.
+                            if (rightguess === (word.length - nonlttr)) {
+                                mes = document.getElementById("messages");
+                                mes.innerText = "WINNER!!!!";
+                                var dfltvideo = vidlink;
+                                var movie = document.getElementById('mediaview');
+                                movie.setAttribute("src", dfltvideo);
+                                gameover = true;
+                            }
+                        }
+                    }
+                    // Add the letter to wrong guesses.
+                    if (found === false) {
+                        var incguess = document.createElement("li");
+                        incguess.innerText = userInput;
+                        wrnglttrspace.appendChild(incguess);
+                        wrongguess++;
+                        lives--;
+                        animate();
+                        // If there have been 10 incorrect guesses, declare loser.
+                        if (wrongguess >= 10) {
                             mes = document.getElementById("messages");
-                            mes.innerText = "WINNER!!!!";
-                            var dfltvideo = vidlink;
-                            var movie = document.getElementById('mediaview');
-                            movie.setAttribute("src", dfltvideo);
+                            mes.innerText = "You lost. LOSER!!!";
+                            gameover = true;
                         }
                     }
                 }
-                // Add the letter to wrong guesses.
-                if (found === false) {
-                    var incguess = document.createElement("li");
-                    incguess.innerText = userInput;
-                    wrnglttrspace.appendChild(incguess);
-                    wrongguess++;
-                    lives--;
-                    animate();
-                    // If there have been 10 incorrect guesses, declare loser.
-                    if (wrongguess >= 10) {
-                        mes = document.getElementById("messages");
-                        mes.innerText = "You lost. LOSER!!!";
-                    }
-                }
+            }
+            else {
+                mes = document.getElementById("messages");
+                mes.innerText = "You must guess a letter from a-z";
             }
         }
         else {
             mes = document.getElementById("messages");
-            mes.innerText = "You must guess a letter from a-z";
+            mes.innerText = "Press the button to restart the game";
         }
 
     }
