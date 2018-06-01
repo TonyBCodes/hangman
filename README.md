@@ -1,22 +1,31 @@
 # hangman
 
-<!-- select word -->
+This is a classic hangman game with the theme of African American actors and actresses.
 
-<!-- load word into array -->
+The user guesses letters and correct letters are presented withing the words in which they appear.  Incorrect letters appear in a separate area.  Multiple guesses of a letter is flagged.  The gallows code was sourced and modified to work within the context of this project.  Upon winning, a movie trailer in which the actor or actress starred is shown.
 
-<!-- get the word length -->
 
-<!-- show blanks for letters in the word -->
+select word
 
-<!-- get guess from keyboard -->
+load word into array
 
-<!-- check to see if guess is in word -->
+get the word length
 
-<!-- replace blanks with letter if letter is in word -->
+show blanks for letters in the word
 
-<!-- show incorrect letters guessed -->
+get guess from keyboard
 
-<!-- indicate if word has been guessed -->
+check to see if guess is in word
 
-<!-- indicate if man has been hanged -->
+replace blanks with letter if letter is in word
+
+show incorrect letters guessed
+
+indicate if word has been guessed
+
+indicate if man has been hanged
+
+show movie trailer upon win
+
+Utilizes javascript, html, css.
 
