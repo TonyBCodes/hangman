@@ -27,5 +27,5 @@ indicate if man has been hanged
 
 show movie trailer upon win
 
-Utilizes javascript, html, css.
+Utilizes javascript, html, bootstrap, css.
 
